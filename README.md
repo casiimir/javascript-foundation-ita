@@ -1,2 +1,2 @@
-# javascript-foundations-ita
+# javascript-foundations
 Fondamenti di JavaScript

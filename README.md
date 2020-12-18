@@ -5,15 +5,23 @@
 
 * <a href="https://casiimir.github.io/javascript-foundations/cap1.html"><strong>CAP I</strong></a>
   - Struttura di un programma
-    - expression
-    - statement
-    - program
+    - Expression
+    - Statement
+    - Program
+    - Indentation
+    - Comments
   - Binding
-    - var
-    - const
-    - let
+    - Var
+    - Const
+    - Let
   - Environment
-    - variabli e funzioni
-    - side-effects
-    - pure-function
+    - Side-effects
+    - Return a value
+  - Conditional execution
+  - Loops
+    - While
+    - For
+    - Break
+    - Continue
+  - Switch
  

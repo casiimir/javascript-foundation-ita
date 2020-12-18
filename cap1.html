@@ -1,687 +1,1297 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Javascript Foundations I</title><style>
-/* webkit printing magic: print all background colors */
-html {
-	-webkit-print-color-adjust: exact;
-}
-* {
-	box-sizing: border-box;
-	-webkit-print-color-adjust: exact;
-}
-
-html,
-body {
-	margin: 0;
-	padding: 0;
-}
-@media only screen {
-	body {
-		margin: 2em auto;
-		max-width: 900px;
-		color: rgb(55, 53, 47);
-	}
-}
-
-body {
-	line-height: 1.5;
-	white-space: pre-wrap;
-}
-
-a,
-a.visited {
-	color: inherit;
-	text-decoration: underline;
-}
-
-.pdf-relative-link-path {
-	font-size: 80%;
-	color: #444;
-}
-
-h1,
-h2,
-h3 {
-	letter-spacing: -0.01em;
-	line-height: 1.2;
-	font-weight: 600;
-	margin-bottom: 0;
-}
-
-.page-title {
-	font-size: 2.5rem;
-	font-weight: 700;
-	margin-top: 0;
-	margin-bottom: 0.75em;
-}
-
-h1 {
-	font-size: 1.875rem;
-	margin-top: 1.875rem;
-}
-
-h2 {
-	font-size: 1.5rem;
-	margin-top: 1.5rem;
-}
-
-h3 {
-	font-size: 1.25rem;
-	margin-top: 1.25rem;
-}
-
-.source {
-	border: 1px solid #ddd;
-	border-radius: 3px;
-	padding: 1.5em;
-	word-break: break-all;
-}
-
-.callout {
-	border-radius: 3px;
-	padding: 1rem;
-}
-
-figure {
-	margin: 1.25em 0;
-	page-break-inside: avoid;
-}
-
-figcaption {
-	opacity: 0.5;
-	font-size: 85%;
-	margin-top: 0.5em;
-}
-
-mark {
-	background-color: transparent;
-}
-
-.indented {
-	padding-left: 1.5em;
-}
-
-hr {
-	background: transparent;
-	display: block;
-	width: 100%;
-	height: 1px;
-	visibility: visible;
-	border: none;
-	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
-}
-
-img {
-	max-width: 100%;
-}
-
-@media only print {
-	img {
-		max-height: 100vh;
-		object-fit: contain;
-	}
-}
-
-@page {
-	margin: 1in;
-}
-
-.collection-content {
-	font-size: 0.875rem;
-}
-
-.column-list {
-	display: flex;
-	justify-content: space-between;
-}
-
-.column {
-	padding: 0 1em;
-}
-
-.column:first-child {
-	padding-left: 0;
-}
-
-.column:last-child {
-	padding-right: 0;
-}
-
-.table_of_contents-item {
-	display: block;
-	font-size: 0.875rem;
-	line-height: 1.3;
-	padding: 0.125rem;
-}
-
-.table_of_contents-indent-1 {
-	margin-left: 1.5rem;
-}
-
-.table_of_contents-indent-2 {
-	margin-left: 3rem;
-}
-
-.table_of_contents-indent-3 {
-	margin-left: 4.5rem;
-}
-
-.table_of_contents-link {
-	text-decoration: none;
-	opacity: 0.7;
-	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
-}
-
-table,
-th,
-td {
-	border: 1px solid rgba(55, 53, 47, 0.09);
-	border-collapse: collapse;
-}
-
-table {
-	border-left: none;
-	border-right: none;
-}
-
-th,
-td {
-	font-weight: normal;
-	padding: 0.25em 0.5em;
-	line-height: 1.5;
-	min-height: 1.5em;
-	text-align: left;
-}
-
-th {
-	color: rgba(55, 53, 47, 0.6);
-}
-
-ol,
-ul {
-	margin: 0;
-	margin-block-start: 0.6em;
-	margin-block-end: 0.6em;
-}
-
-li > ol:first-child,
-li > ul:first-child {
-	margin-block-start: 0.6em;
-}
-
-ul > li {
-	list-style: disc;
-}
-
-ul.to-do-list {
-	text-indent: -1.7em;
-}
-
-ul.to-do-list > li {
-	list-style: none;
-}
-
-.to-do-children-checked {
-	text-decoration: line-through;
-	opacity: 0.375;
-}
-
-ul.toggle > li {
-	list-style: none;
-}
-
-ul {
-	padding-inline-start: 1.7em;
-}
-
-ul > li {
-	padding-left: 0.1em;
-}
-
-ol {
-	padding-inline-start: 1.6em;
-}
-
-ol > li {
-	padding-left: 0.2em;
-}
-
-.mono ol {
-	padding-inline-start: 2em;
-}
-
-.mono ol > li {
-	text-indent: -0.4em;
-}
-
-.toggle {
-	padding-inline-start: 0em;
-	list-style-type: none;
-}
-
-/* Indent toggle children */
-.toggle > li > details {
-	padding-left: 1.7em;
-}
-
-.toggle > li > details > summary {
-	margin-left: -1.1em;
-}
-
-.selected-value {
-	display: inline-block;
-	padding: 0 0.5em;
-	background: rgba(206, 205, 202, 0.5);
-	border-radius: 3px;
-	margin-right: 0.5em;
-	margin-top: 0.3em;
-	margin-bottom: 0.3em;
-	white-space: nowrap;
-}
-
-.collection-title {
-	display: inline-block;
-	margin-right: 1em;
-}
-
-time {
-	opacity: 0.5;
-}
-
-.icon {
-	display: inline-block;
-	max-width: 1.2em;
-	max-height: 1.2em;
-	text-decoration: none;
-	vertical-align: text-bottom;
-	margin-right: 0.5em;
-}
-
-img.icon {
-	border-radius: 3px;
-}
-
-.user-icon {
-	width: 1.5em;
-	height: 1.5em;
-	border-radius: 100%;
-	margin-right: 0.5rem;
-}
-
-.user-icon-inner {
-	font-size: 0.8em;
-}
-
-.text-icon {
-	border: 1px solid #000;
-	text-align: center;
-}
-
-.page-cover-image {
-	display: block;
-	object-fit: cover;
-	width: 100%;
-	height: 30vh;
-}
-
-.page-header-icon {
-	font-size: 3rem;
-	margin-bottom: 1rem;
-}
-
-.page-header-icon-with-cover {
-	margin-top: -0.72em;
-	margin-left: 0.07em;
-}
-
-.page-header-icon img {
-	border-radius: 3px;
-}
-
-.link-to-page {
-	margin: 1em 0;
-	padding: 0;
-	border: none;
-	font-weight: 500;
-}
-
-p > .user {
-	opacity: 0.5;
-}
-
-td > .user,
-td > time {
-	white-space: nowrap;
-}
-
-input[type="checkbox"] {
-	transform: scale(1.5);
-	margin-right: 0.6em;
-	vertical-align: middle;
-}
-
-p {
-	margin-top: 0.5em;
-	margin-bottom: 0.5em;
-}
-
-.image {
-	border: none;
-	margin: 1.5em 0;
-	padding: 0;
-	border-radius: 0;
-	text-align: center;
-}
-
-.code,
-code {
-	background: rgba(135, 131, 120, 0.15);
-	border-radius: 3px;
-	padding: 0.2em 0.4em;
-	border-radius: 3px;
-	font-size: 85%;
-	tab-size: 2;
-}
-
-code {
-	color: #eb5757;
-}
-
-.code {
-	padding: 1.5em 1em;
-}
-
-.code-wrap {
-	white-space: pre-wrap;
-	word-break: break-all;
-}
-
-.code > code {
-	background: none;
-	padding: 0;
-	font-size: 100%;
-	color: inherit;
-}
-
-blockquote {
-	font-size: 1.25em;
-	margin: 1em 0;
-	padding-left: 1em;
-	border-left: 3px solid rgb(55, 53, 47);
-}
-
-.bookmark {
-	text-decoration: none;
-	max-height: 8em;
-	padding: 0;
-	display: flex;
-	width: 100%;
-	align-items: stretch;
-}
-
-.bookmark-title {
-	font-size: 0.85em;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	height: 1.75em;
-	white-space: nowrap;
-}
-
-.bookmark-text {
-	display: flex;
-	flex-direction: column;
-}
-
-.bookmark-info {
-	flex: 4 1 180px;
-	padding: 12px 14px 14px;
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-}
-
-.bookmark-image {
-	width: 33%;
-	flex: 1 1 180px;
-	display: block;
-	position: relative;
-	object-fit: cover;
-	border-radius: 1px;
-}
-
-.bookmark-description {
-	color: rgba(55, 53, 47, 0.6);
-	font-size: 0.75em;
-	overflow: hidden;
-	max-height: 4.5em;
-	word-break: break-word;
-}
-
-.bookmark-href {
-	font-size: 0.75em;
-	margin-top: 0.25em;
-}
-
-.sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
-.code { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace; }
-.serif { font-family: Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif; }
-.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
-.pdf .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
-
-.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
-
-.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
-
-.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
-
-.highlight-default {
-}
-.highlight-gray {
-	color: rgb(155,154,151);
-}
-.highlight-brown {
-	color: rgb(100,71,58);
-}
-.highlight-orange {
-	color: rgb(217,115,13);
-}
-.highlight-yellow {
-	color: rgb(223,171,1);
-}
-.highlight-teal {
-	color: rgb(15,123,108);
-}
-.highlight-blue {
-	color: rgb(11,110,153);
-}
-.highlight-purple {
-	color: rgb(105,64,165);
-}
-.highlight-pink {
-	color: rgb(173,26,114);
-}
-.highlight-red {
-	color: rgb(224,62,62);
-}
-.highlight-gray_background {
-	background: rgb(235,236,237);
-}
-.highlight-brown_background {
-	background: rgb(233,229,227);
-}
-.highlight-orange_background {
-	background: rgb(250,235,221);
-}
-.highlight-yellow_background {
-	background: rgb(251,243,219);
-}
-.highlight-teal_background {
-	background: rgb(221,237,234);
-}
-.highlight-blue_background {
-	background: rgb(221,235,241);
-}
-.highlight-purple_background {
-	background: rgb(234,228,242);
-}
-.highlight-pink_background {
-	background: rgb(244,223,235);
-}
-.highlight-red_background {
-	background: rgb(251,228,228);
-}
-.block-color-default {
-	color: inherit;
-	fill: inherit;
-}
-.block-color-gray {
-	color: rgba(55, 53, 47, 0.6);
-	fill: rgba(55, 53, 47, 0.6);
-}
-.block-color-brown {
-	color: rgb(100,71,58);
-	fill: rgb(100,71,58);
-}
-.block-color-orange {
-	color: rgb(217,115,13);
-	fill: rgb(217,115,13);
-}
-.block-color-yellow {
-	color: rgb(223,171,1);
-	fill: rgb(223,171,1);
-}
-.block-color-teal {
-	color: rgb(15,123,108);
-	fill: rgb(15,123,108);
-}
-.block-color-blue {
-	color: rgb(11,110,153);
-	fill: rgb(11,110,153);
-}
-.block-color-purple {
-	color: rgb(105,64,165);
-	fill: rgb(105,64,165);
-}
-.block-color-pink {
-	color: rgb(173,26,114);
-	fill: rgb(173,26,114);
-}
-.block-color-red {
-	color: rgb(224,62,62);
-	fill: rgb(224,62,62);
-}
-.block-color-gray_background {
-	background: rgb(235,236,237);
-}
-.block-color-brown_background {
-	background: rgb(233,229,227);
-}
-.block-color-orange_background {
-	background: rgb(250,235,221);
-}
-.block-color-yellow_background {
-	background: rgb(251,243,219);
-}
-.block-color-teal_background {
-	background: rgb(221,237,234);
-}
-.block-color-blue_background {
-	background: rgb(221,235,241);
-}
-.block-color-purple_background {
-	background: rgb(234,228,242);
-}
-.block-color-pink_background {
-	background: rgb(244,223,235);
-}
-.block-color-red_background {
-	background: rgb(251,228,228);
-}
-.select-value-color-default { background-color: rgba(206,205,202,0.5); }
-.select-value-color-gray { background-color: rgba(155,154,151, 0.4); }
-.select-value-color-brown { background-color: rgba(140,46,0,0.2); }
-.select-value-color-orange { background-color: rgba(245,93,0,0.2); }
-.select-value-color-yellow { background-color: rgba(233,168,0,0.2); }
-.select-value-color-green { background-color: rgba(0,135,107,0.2); }
-.select-value-color-blue { background-color: rgba(0,120,223,0.2); }
-.select-value-color-purple { background-color: rgba(103,36,222,0.2); }
-.select-value-color-pink { background-color: rgba(221,0,129,0.2); }
-.select-value-color-red { background-color: rgba(255,0,26,0.2); }
-
-.checkbox {
-	display: inline-flex;
-	vertical-align: text-bottom;
-	width: 16;
-	height: 16;
-	background-size: 16px;
-	margin-left: 2px;
-	margin-right: 5px;
-}
-
-.checkbox-on {
-	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
-}
-
-.checkbox-off {
-	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
-}
-	
-</style></head><body><article id="15ce19d3-bf9f-492b-97da-495540644550" class="page sans"><header><img class="page-cover-image" src="./img/javascript-foundations-i.jpg" style="object-position:center 67.94%"/><h1 class="page-title">Javascript Foundations I</h1></header><div class="page-body"><h2 id="1e9cefd8-4e6f-4a46-95f7-a5de02842fa4" class="">Struttura di un programma</h2><p id="397ab45f-181b-4604-afe5-cacbb6667a03" class="">La struttura di un programma JavaScript può essere intesa come formata da:</p><h3 id="63761409-53ad-4eb0-90ea-b90d1a209dfa" class="">Expression</h3><p id="eb54c377-7527-43bc-8163-73fe84c27ebe" class="">L&#x27;espressione è la parte più piccola e va a identificare un frammento di <em>statement </em>(dichiarazione). Essa è fondamentale poiché produce un <em>value</em><em> </em>(valore).</p><p id="48e4c7da-f324-40be-a870-42e3d1a3a3e2" class="">
-</p><pre id="a8192d8d-5ce9-45db-80ca-9bf9941607de" class="code"><code>18
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>Javascript Foundations - Cap. I</title>
+  <style>
+    /* webkit printing magic: print all background colors */
+    html {
+      -webkit-print-color-adjust: exact;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-print-color-adjust: exact;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    @media only screen {
+      body {
+        margin: 2em auto;
+        max-width: 900px;
+        color: rgb(55, 53, 47);
+      }
+    }
+
+    body {
+      line-height: 1.5;
+      white-space: pre-wrap;
+    }
+
+    a,
+    a.visited {
+      color: inherit;
+      text-decoration: underline;
+    }
+
+    .pdf-relative-link-path {
+      font-size: 80%;
+      color: #444;
+    }
+
+    h1,
+    h2,
+    h3 {
+      letter-spacing: -0.01em;
+      line-height: 1.2;
+      font-weight: 600;
+      margin-bottom: 0;
+    }
+
+    .page-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-top: 0;
+      margin-bottom: 0.75em;
+    }
+
+    h1 {
+      font-size: 1.875rem;
+      margin-top: 1.875rem;
+    }
+
+    h2 {
+      font-size: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    h3 {
+      font-size: 1.25rem;
+      margin-top: 1.25rem;
+    }
+
+    .source {
+      border: 1px solid #ddd;
+      border-radius: 3px;
+      padding: 1.5em;
+      word-break: break-all;
+    }
+
+    .callout {
+      border-radius: 3px;
+      padding: 1rem;
+    }
+
+    figure {
+      margin: 1.25em 0;
+      page-break-inside: avoid;
+    }
+
+    figcaption {
+      opacity: 0.5;
+      font-size: 85%;
+      margin-top: 0.5em;
+    }
+
+    mark {
+      background-color: transparent;
+    }
+
+    .indented {
+      padding-left: 1.5em;
+    }
+
+    hr {
+      background: transparent;
+      display: block;
+      width: 100%;
+      height: 1px;
+      visibility: visible;
+      border: none;
+      border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+    }
+
+    img {
+      max-width: 100%;
+    }
+
+    @media only print {
+      img {
+        max-height: 100vh;
+        object-fit: contain;
+      }
+    }
+
+    @page {
+      margin: 1in;
+    }
+
+    .collection-content {
+      font-size: 0.875rem;
+    }
+
+    .column-list {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .column {
+      padding: 0 1em;
+    }
+
+    .column:first-child {
+      padding-left: 0;
+    }
+
+    .column:last-child {
+      padding-right: 0;
+    }
+
+    .table_of_contents-item {
+      display: block;
+      font-size: 0.875rem;
+      line-height: 1.3;
+      padding: 0.125rem;
+    }
+
+    .table_of_contents-indent-1 {
+      margin-left: 1.5rem;
+    }
+
+    .table_of_contents-indent-2 {
+      margin-left: 3rem;
+    }
+
+    .table_of_contents-indent-3 {
+      margin-left: 4.5rem;
+    }
+
+    .table_of_contents-link {
+      text-decoration: none;
+      opacity: 0.7;
+      border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+    }
+
+    table,
+    th,
+    td {
+      border: 1px solid rgba(55, 53, 47, 0.09);
+      border-collapse: collapse;
+    }
+
+    table {
+      border-left: none;
+      border-right: none;
+    }
+
+    th,
+    td {
+      font-weight: normal;
+      padding: 0.25em 0.5em;
+      line-height: 1.5;
+      min-height: 1.5em;
+      text-align: left;
+    }
+
+    th {
+      color: rgba(55, 53, 47, 0.6);
+    }
+
+    ol,
+    ul {
+      margin: 0;
+      margin-block-start: 0.6em;
+      margin-block-end: 0.6em;
+    }
+
+    li>ol:first-child,
+    li>ul:first-child {
+      margin-block-start: 0.6em;
+    }
+
+    ul>li {
+      list-style: disc;
+    }
+
+    ul.to-do-list {
+      text-indent: -1.7em;
+    }
+
+    ul.to-do-list>li {
+      list-style: none;
+    }
+
+    .to-do-children-checked {
+      text-decoration: line-through;
+      opacity: 0.375;
+    }
+
+    ul.toggle>li {
+      list-style: none;
+    }
+
+    ul {
+      padding-inline-start: 1.7em;
+    }
+
+    ul>li {
+      padding-left: 0.1em;
+    }
+
+    ol {
+      padding-inline-start: 1.6em;
+    }
+
+    ol>li {
+      padding-left: 0.2em;
+    }
+
+    .mono ol {
+      padding-inline-start: 2em;
+    }
+
+    .mono ol>li {
+      text-indent: -0.4em;
+    }
+
+    .toggle {
+      padding-inline-start: 0em;
+      list-style-type: none;
+    }
+
+    /* Indent toggle children */
+    .toggle>li>details {
+      padding-left: 1.7em;
+    }
+
+    .toggle>li>details>summary {
+      margin-left: -1.1em;
+    }
+
+    .selected-value {
+      display: inline-block;
+      padding: 0 0.5em;
+      background: rgba(206, 205, 202, 0.5);
+      border-radius: 3px;
+      margin-right: 0.5em;
+      margin-top: 0.3em;
+      margin-bottom: 0.3em;
+      white-space: nowrap;
+    }
+
+    .collection-title {
+      display: inline-block;
+      margin-right: 1em;
+    }
+
+    time {
+      opacity: 0.5;
+    }
+
+    .icon {
+      display: inline-block;
+      max-width: 1.2em;
+      max-height: 1.2em;
+      text-decoration: none;
+      vertical-align: text-bottom;
+      margin-right: 0.5em;
+    }
+
+    img.icon {
+      border-radius: 3px;
+    }
+
+    .user-icon {
+      width: 1.5em;
+      height: 1.5em;
+      border-radius: 100%;
+      margin-right: 0.5rem;
+    }
+
+    .user-icon-inner {
+      font-size: 0.8em;
+    }
+
+    .text-icon {
+      border: 1px solid #000;
+      text-align: center;
+    }
+
+    .page-cover-image {
+      display: block;
+      object-fit: cover;
+      width: 100%;
+      height: 30vh;
+    }
+
+    .page-header-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    .page-header-icon-with-cover {
+      margin-top: -0.72em;
+      margin-left: 0.07em;
+    }
+
+    .page-header-icon img {
+      border-radius: 3px;
+    }
+
+    .link-to-page {
+      margin: 1em 0;
+      padding: 0;
+      border: none;
+      font-weight: 500;
+    }
+
+    p>.user {
+      opacity: 0.5;
+    }
+
+    td>.user,
+    td>time {
+      white-space: nowrap;
+    }
+
+    input[type="checkbox"] {
+      transform: scale(1.5);
+      margin-right: 0.6em;
+      vertical-align: middle;
+    }
+
+    p {
+      margin-top: 0.5em;
+      margin-bottom: 0.5em;
+    }
+
+    .image {
+      border: none;
+      margin: 1.5em 0;
+      padding: 0;
+      border-radius: 0;
+      text-align: center;
+    }
+
+    .code,
+    code {
+      background: rgba(135, 131, 120, 0.15);
+      border-radius: 3px;
+      padding: 0.2em 0.4em;
+      border-radius: 3px;
+      font-size: 85%;
+      tab-size: 2;
+    }
+
+    code {
+      color: #eb5757;
+    }
+
+    .code {
+      padding: 1.5em 1em;
+    }
+
+    .code-wrap {
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+
+    .code>code {
+      background: none;
+      padding: 0;
+      font-size: 100%;
+      color: inherit;
+    }
+
+    blockquote {
+      font-size: 1.25em;
+      margin: 1em 0;
+      padding-left: 1em;
+      border-left: 3px solid rgb(55, 53, 47);
+    }
+
+    .bookmark {
+      text-decoration: none;
+      max-height: 8em;
+      padding: 0;
+      display: flex;
+      width: 100%;
+      align-items: stretch;
+    }
+
+    .bookmark-title {
+      font-size: 0.85em;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      height: 1.75em;
+      white-space: nowrap;
+    }
+
+    .bookmark-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .bookmark-info {
+      flex: 4 1 180px;
+      padding: 12px 14px 14px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .bookmark-image {
+      width: 33%;
+      flex: 1 1 180px;
+      display: block;
+      position: relative;
+      object-fit: cover;
+      border-radius: 1px;
+    }
+
+    .bookmark-description {
+      color: rgba(55, 53, 47, 0.6);
+      font-size: 0.75em;
+      overflow: hidden;
+      max-height: 4.5em;
+      word-break: break-word;
+    }
+
+    .bookmark-href {
+      font-size: 0.75em;
+      margin-top: 0.25em;
+    }
+
+    .sans {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
+    }
+
+    .code {
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+    }
+
+    .serif {
+      font-family: Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif;
+    }
+
+    .mono {
+      font-family: iawriter-mono, Nitti, Menlo, Courier, monospace;
+    }
+
+    .pdf .sans {
+      font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR';
+    }
+
+    .pdf .code {
+      font-family: Source Code Pro, "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR';
+    }
+
+    .pdf .serif {
+      font-family: PT Serif, Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR';
+    }
+
+    .pdf .mono {
+      font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR';
+    }
+
+    .highlight-default {}
+
+    .highlight-gray {
+      color: rgb(155, 154, 151);
+    }
+
+    .highlight-brown {
+      color: rgb(100, 71, 58);
+    }
+
+    .highlight-orange {
+      color: rgb(217, 115, 13);
+    }
+
+    .highlight-yellow {
+      color: rgb(223, 171, 1);
+    }
+
+    .highlight-teal {
+      color: rgb(15, 123, 108);
+    }
+
+    .highlight-blue {
+      color: rgb(11, 110, 153);
+    }
+
+    .highlight-purple {
+      color: rgb(105, 64, 165);
+    }
+
+    .highlight-pink {
+      color: rgb(173, 26, 114);
+    }
+
+    .highlight-red {
+      color: rgb(224, 62, 62);
+    }
+
+    .highlight-gray_background {
+      background: rgb(235, 236, 237);
+    }
+
+    .highlight-brown_background {
+      background: rgb(233, 229, 227);
+    }
+
+    .highlight-orange_background {
+      background: rgb(250, 235, 221);
+    }
+
+    .highlight-yellow_background {
+      background: rgb(251, 243, 219);
+    }
+
+    .highlight-teal_background {
+      background: rgb(221, 237, 234);
+    }
+
+    .highlight-blue_background {
+      background: rgb(221, 235, 241);
+    }
+
+    .highlight-purple_background {
+      background: rgb(234, 228, 242);
+    }
+
+    .highlight-pink_background {
+      background: rgb(244, 223, 235);
+    }
+
+    .highlight-red_background {
+      background: rgb(251, 228, 228);
+    }
+
+    .block-color-default {
+      color: inherit;
+      fill: inherit;
+    }
+
+    .block-color-gray {
+      color: rgba(55, 53, 47, 0.6);
+      fill: rgba(55, 53, 47, 0.6);
+    }
+
+    .block-color-brown {
+      color: rgb(100, 71, 58);
+      fill: rgb(100, 71, 58);
+    }
+
+    .block-color-orange {
+      color: rgb(217, 115, 13);
+      fill: rgb(217, 115, 13);
+    }
+
+    .block-color-yellow {
+      color: rgb(223, 171, 1);
+      fill: rgb(223, 171, 1);
+    }
+
+    .block-color-teal {
+      color: rgb(15, 123, 108);
+      fill: rgb(15, 123, 108);
+    }
+
+    .block-color-blue {
+      color: rgb(11, 110, 153);
+      fill: rgb(11, 110, 153);
+    }
+
+    .block-color-purple {
+      color: rgb(105, 64, 165);
+      fill: rgb(105, 64, 165);
+    }
+
+    .block-color-pink {
+      color: rgb(173, 26, 114);
+      fill: rgb(173, 26, 114);
+    }
+
+    .block-color-red {
+      color: rgb(224, 62, 62);
+      fill: rgb(224, 62, 62);
+    }
+
+    .block-color-gray_background {
+      background: rgb(235, 236, 237);
+    }
+
+    .block-color-brown_background {
+      background: rgb(233, 229, 227);
+    }
+
+    .block-color-orange_background {
+      background: rgb(250, 235, 221);
+    }
+
+    .block-color-yellow_background {
+      background: rgb(251, 243, 219);
+    }
+
+    .block-color-teal_background {
+      background: rgb(221, 237, 234);
+    }
+
+    .block-color-blue_background {
+      background: rgb(221, 235, 241);
+    }
+
+    .block-color-purple_background {
+      background: rgb(234, 228, 242);
+    }
+
+    .block-color-pink_background {
+      background: rgb(244, 223, 235);
+    }
+
+    .block-color-red_background {
+      background: rgb(251, 228, 228);
+    }
+
+    .select-value-color-default {
+      background-color: rgba(206, 205, 202, 0.5);
+    }
+
+    .select-value-color-gray {
+      background-color: rgba(155, 154, 151, 0.4);
+    }
+
+    .select-value-color-brown {
+      background-color: rgba(140, 46, 0, 0.2);
+    }
+
+    .select-value-color-orange {
+      background-color: rgba(245, 93, 0, 0.2);
+    }
+
+    .select-value-color-yellow {
+      background-color: rgba(233, 168, 0, 0.2);
+    }
+
+    .select-value-color-green {
+      background-color: rgba(0, 135, 107, 0.2);
+    }
+
+    .select-value-color-blue {
+      background-color: rgba(0, 120, 223, 0.2);
+    }
+
+    .select-value-color-purple {
+      background-color: rgba(103, 36, 222, 0.2);
+    }
+
+    .select-value-color-pink {
+      background-color: rgba(221, 0, 129, 0.2);
+    }
+
+    .select-value-color-red {
+      background-color: rgba(255, 0, 26, 0.2);
+    }
+
+    .checkbox {
+      display: inline-flex;
+      vertical-align: text-bottom;
+      width: 16;
+      height: 16;
+      background-size: 16px;
+      margin-left: 2px;
+      margin-right: 5px;
+    }
+
+    .checkbox-on {
+      background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+    }
+
+    .checkbox-off {
+      background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+    }
+  </style>
+</head>
+
+<body>
+  <article id="15ce19d3-bf9f-492b-97da-495540644550" class="page sans">
+    <header><img class="page-cover-image" src="./img/javascript-foundations-i.jpg"
+        style="object-position:center 67.94%" />
+      <h1 class="page-title">Javascript Foundations I</h1>
+    </header>
+    <div class="page-body">
+      <h2 id="1e9cefd8-4e6f-4a46-95f7-a5de02842fa4" class="">Struttura di un programma</h2>
+      <p id="397ab45f-181b-4604-afe5-cacbb6667a03" class="">La struttura di un programma JavaScript può essere intesa
+        come formata da:</p>
+      <h3 id="63761409-53ad-4eb0-90ea-b90d1a209dfa" class="">Expression</h3>
+      <p id="eb54c377-7527-43bc-8163-73fe84c27ebe" class="">L&#x27;espressione è la parte più piccola e va a
+        identificare un frammento di <em>statement </em>(dichiarazione). Essa è fondamentale poiché produce un
+        <em>value</em><em> </em>(valore).</p>
+      <p id="48e4c7da-f324-40be-a870-42e3d1a3a3e2" class="">
+      </p>
+      <pre id="a8192d8d-5ce9-45db-80ca-9bf9941607de" class="code"><code>18
 x + y
 true &amp;&amp; false
-a &lt;= 27</code></pre><h3 id="a515321a-96c1-4f2a-b4e0-9639e5f9e30b" class="">Statement</h3><p id="ef0def33-3bde-43bd-ab4a-784fa42c0f74" class="">La dichiarazione (<em>statement</em>) è una sequenza di codice completa che diciamo essere più indipendente e autosufficiente della <em>expression </em>(termine comunque da prendere con le pinze, in quanto in JavaScript anche un&#x27;espressione può esserlo).  La possiamo identificare subito in quanto termina con il classico <em>semicolon</em> (punto e virgola).</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="90794190-5414-45d0-ad61-76e6120da792"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">Quando uno statement cambia un valore precedentemente definito, come ad esempio la riassegnazione di una variabile, questo è considerato come <em>side-effect</em> (effetto collaterale).</div></figure><p id="e92ded71-3921-4790-9f7a-f4c56487b9be" class="">
-</p><pre id="e42fc73f-0e3b-4af3-b832-c9a9610abc26" class="code"><code>let x = 18;
+a &lt;= 27</code></pre>
+      <h3 id="a515321a-96c1-4f2a-b4e0-9639e5f9e30b" class="">Statement</h3>
+      <p id="ef0def33-3bde-43bd-ab4a-784fa42c0f74" class="">La dichiarazione (<em>statement</em>) è una sequenza di
+        codice completa che diciamo essere più indipendente e autosufficiente della <em>expression </em>(termine
+        comunque da prendere con le pinze, in quanto in JavaScript anche un&#x27;espressione può esserlo). La possiamo
+        identificare subito in quanto termina con il classico <em>semicolon</em> (punto e virgola).</p>
+      <figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex"
+        id="90794190-5414-45d0-ad61-76e6120da792">
+        <div style="font-size:1.5em"><span class="icon">💡</span></div>
+        <div style="width:100%">Quando uno statement cambia un valore precedentemente definito, come ad esempio la
+          riassegnazione di una variabile, questo è considerato come <em>side-effect</em> (effetto collaterale).</div>
+      </figure>
+      <p id="e92ded71-3921-4790-9f7a-f4c56487b9be" class="">
+      </p>
+      <pre id="e42fc73f-0e3b-4af3-b832-c9a9610abc26" class="code"><code>let x = 18;
 console.log(x);
 alert(Math.round(x));
 if (true) console.log(x * 2);
 true &amp;&amp; console.log(x * 2);
-x = 5;  // Side Effect</code></pre><h3 id="b8090714-8915-4c2a-8aa2-a7d5294120d1" class="">Program</h3><p id="3c9660de-5b41-438d-b4a2-ce3dc121fdcd" class="">Il programma vero e proprio, che sia articolato o un semplice snippet, non è altro che l&#x27;insieme di tutti gli statement che lo compongono.</p><pre id="aff49e97-bb59-4226-8cdf-eb43cfc4e852" class="code"><code>function checkIfPresent (keyboard) {
+x = 5;  // Side Effect</code></pre>
+      <h3 id="b8090714-8915-4c2a-8aa2-a7d5294120d1" class="">Program</h3>
+      <p id="3c9660de-5b41-438d-b4a2-ce3dc121fdcd" class="">Il programma vero e proprio, che sia articolato o un
+        semplice snippet, non è altro che l&#x27;insieme di tutti gli statement che lo compongono.</p>
+      <pre id="aff49e97-bb59-4226-8cdf-eb43cfc4e852" class="code"><code>function checkIfPresent (keyboard) {
 	if (keyboard) {
 		return &quot;We can write the code if we want&quot;;
 	} else {
 		return &quot;We need something to continue&quot;;
 	}
-} </code></pre><p id="1f944a3b-8e9e-4f0b-a3ab-b487b908153e" class="">
-</p><hr id="a4f22bd7-6a52-4761-bb84-051238b17deb"/><h2 id="c84078cf-a05a-45af-a96d-d17bc289d74a" class="">Binding</h2><p id="b6eab0a3-c1e4-4e61-a4f4-04ac18465fa0" class="">Il <em>binding </em>(vincolo) non è altro che sinonimo di <em>variable </em>ed esso è elemento costituente di ogni codice. Più precisamente con binding intendiamo l&#x27;atto di legare una variabile a un nome, e con questa possiamo dialogare più facilmente con la memoria (precisamente locazione in memoria) e quindi dichiarare e/o assegnare ad essa un dato valore:</p><p id="5134f4d3-d603-46d2-9481-63109df21fd4" class="">
-</p><pre id="86d7b7d5-c65b-4e11-bfc4-4cbc7df99c72" class="code"><code>var globalIsValid = true;  // Everyone knows that variable in the program
-const PI = 3.14            // this will never change
-let myAge = 27;            // this change every year
-													 // those are all expressions</code></pre><p id="9f433de0-f235-40e6-81fb-acc9b6c9d90a" class="">
-</p><p id="e93387ce-6a85-4600-9aa6-51fa3692ca25" class="">Fondamentalmente abbiamo tre modi di definire una variabile tramite le apposite keywords:</p><ul id="0cc3ec6b-1b19-4657-871a-364b476d0437" class="toggle"><li><details open=""><summary><code>var</code></summary><p id="3674ebab-a26e-4301-a975-e8a727162130" class="">La versione classica, definisce una variabile globale: possiede uno <em>scope</em> globale (l&#x27;argomento verrà approfondito nella sezione relativa allo<em> scope</em>). L&#x27;utilizzo di questa keyword ormai è stato superato con l&#x27;introduzione di <code>let</code> e <code>const</code> con ES6.</p></details></li></ul><ul id="d30d2567-86d4-4bdf-a227-9002992b722f" class="toggle"><li><details open=""><summary><code>const</code></summary><p id="6f1c9a7c-4c73-4051-9c7e-8ca1e748e0c7" class="">Definisce una costante, un particolare tipo di variabile immutabile e non riassegnabile. Se provate a riassegnare il valore a una costante JS vi solleverà un errore. Consiglio di utilizzare principalmente questo tipo di binding.</p></details></li></ul><ul id="680d2b72-21a9-4c01-942c-b4151363c4e2" class="toggle"><li><details open=""><summary><code>let</code></summary><p id="3c4b4592-8b69-4433-8886-844f82c68154" class="">Definisce propriamente una variabile, mutabile e con scope limitato al <em>block </em>(con blocco si intende tutto ciò che viene avvolto da una coppia di <em>curly brackets</em> (parentesi graffe) entro la quale è definita.</p></details></li></ul><p id="529c50c4-27e1-437e-a258-3e87cc71001d" class="">
-</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="8bd3e95e-06e7-4b97-8ad2-58a66cf5b8bf"><div style="font-size:1.5em"><span class="icon">📦</span></div><div style="width:100%">Siamo soliti pensare alle variabili come contenitori d&#x27;informazioni, di valori. In realtà le cose non sembrano essere proprio così: una variabile in JavaScript punta al suo valore in memoria (l&#x27;argomento verrà approfondito nella sezione relativa all&#x27;<em>environment</em> (ambiente). </div></figure><p id="18cbdcd7-2a93-4ca8-8bfb-a75675f668e5" class="">
-</p><p id="3ca4fb52-d791-4987-8625-f6db7d658bae" class="">Questo modello di pensare le variabili ci viene in aiuto in quanto due diverse variabili possono <strong>riferirsi </strong>allo stesso valore (quindi non contenere lo stesso valore). </p><p id="303e3608-c005-4e66-894d-aa0b1f13d852" class="">
-</p><p id="130aea34-e79e-4882-a16c-6982f467f468" class="">A parte nel caso di <code>const</code> possiamo riassegnare il valore a cui puntiamo con una riassegnazione, usando sempre lo stesso <em>operatore di assegnazione </em>( = ).</p><p id="c1eb14b3-52c4-474d-bf08-1d1a380f39ca" class="">Possiamo anche definire più variabili nella stessa espressione: <code>let width = 1920, height = 1080;</code></p><p id="edd83c74-e8c1-4057-99c7-f42b78f515cb" class="">
-</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="5ce0bebd-f528-4690-9aa3-8bccd99ff6ea"><div style="font-size:1.5em"><span class="icon">🐪</span></div><div style="width:100%">Consiglio di riflettere qualche secondo sulla scelta del nome di una variabile; inoltre è ormai consuetudine preferire una formattazione tipo <em>camelCase </em>(l&#x27;argomento verrà approfondito nella sezione <em>clean code</em>).</div></figure><p id="bc906876-bb16-497d-b031-b8bbccadbf2e" class="">
-</p><hr id="e8a2ede2-d8bc-4af7-bac4-0073e728957b"/><h2 id="c6b9af03-36d7-4742-be1c-1cec74dd4be8" class="">Environment</h2><p id="9ad0b629-650f-46f4-877b-fac9d771279f" class="">Ogni volta che andiamo a creare una variabile questa, correlata al valore cui punta, viene automaticamente inserita in uno stack da qualche parte nella memoria del computer (l&#x27;argomento merita un approfondimento a parte). Il luogo dove risiedono tutte questa variabili è chiamato <em>Environment</em> (ambiente). </p><p id="02a3972e-772e-4782-85c9-614d0c32d585" class="">A questi vengono aggiunti tutta una serie di elementi forniti dall&#x27;ambiente standard di JavaScript, queste sono le <em>functions </em>(funzioni). Abbiamo già fatto ricorso a esse poco sopra, quando per esempio abbiamo chiamalo la funzione (più opportuno chiamarlo metodo, dopo vedremo perché) <code>console.log()</code>. L&#x27;argomento richiede un capito tutto proprio, per il momento voglio introdurlo qui per concludere con il binding.</p><p id="74b9ce51-2051-4ea4-8bdc-7313540637bf" class="">
-</p><p id="d82f34c0-4cd7-4e95-a562-cf8b91401aed" class="">Una funzione è un programma in miniatura. Ne esistono di ogni tipo, e di ogni tipo le possiamo scrivere. Per ora ci basta sapere che una funzione avvolge ed esegue una determinata sequenza di codice (quindi di statements) servendosi di un blocco codice (una coppia di parentesi graffe).</p><p id="6a6426e1-3d60-4f92-9cc4-d6974cc4765d" class="">
-</p><pre id="03a79ed2-86ed-4e0e-9e3d-cc391a41ba91" class="code"><code>function checkIfPresent (keyboard) {
+} </code></pre>
+      <p id="1f944a3b-8e9e-4f0b-a3ab-b487b908153e" class="">
+      </p>
+      <h3 id="4d922fda-1ada-4c50-82f1-5c3250c9ab20" class="">Indentation</h3>
+      <p id="11f13a9b-e20b-430f-9757-11688be56ded" class="">Quando scriviamo il nostro codice è bene tenere a mente
+        delle regole fondamentali di <em>stile. </em>Per il momento voglio solo introdurre l&#x27;
+        <em>indentazione</em>. Lungo tutto questo documento troverete diversi spezzoni di codice, i cui margini a volte
+        vengono spostati di qualche carattere. Questo è il processo che permette di dividere visivamente la logica che
+        ruota attorno al nostro codice. Ai fini dell&#x27;esecuizione questa non causa alcun problema, potremmo scrivere
+        infatti tutto in una sola riga, ma risulterebbe invece illegibile o, quanto meno, di difficile lettura. E&#x27;
+        buona norma abituarsi fin da subito ad usare i rietri. Di norma si utilizza una tabulazione ad ogni indentazione
+        (o due spazi).</p>
+      <p id="c54f911a-04fe-44de-afe2-ffb9d79741d6" class="">
+      </p>
+      <h3 id="d3e4880d-880f-4afc-b920-1001161842ee" class="">Comments</h3>
+      <p id="b2dcf5a0-80d5-4cea-80ef-e93e8ca18f0c" class="">I commenti rappresentano tutto il testo non interpretato e
+        che quindi non fa parte del <em>flow</em> (flusso) del programma. Questi sono utili al fine di appuntare note
+        per se stessi (se ritorniamo ad esempio su un progetto a distanza di tempo) e per gli altri sviluppatori che
+        mettono mano al nostro codice.</p>
+      <p id="3a64bbec-27b7-419d-be96-970c40de203b" class="">Abbiamo due definizioni: in riga inserendo doppio
+        <em>slash</em> <code>//</code> e in riga multipla utilizzando <code>/*</code> in apertura e <code>*/</code> in
+        chiusura.</p>
+      <pre id="ce89eae5-7875-4350-9abd-16446934c2be" class="code"><code>// Questo codice non verrà mai eseguito
+/* Neanche
+		questo
+		qui */</code></pre>
+      <hr id="a4f22bd7-6a52-4761-bb84-051238b17deb" />
+      <h2 id="c84078cf-a05a-45af-a96d-d17bc289d74a" class="">Binding</h2>
+      <p id="b6eab0a3-c1e4-4e61-a4f4-04ac18465fa0" class="">Il <em>binding </em>(vincolo) non è altro che sinonimo di
+        <em>variable </em>ed esso è elemento costituente di ogni codice. Più precisamente con binding intendiamo
+        l&#x27;atto di legare una variabile a un nome, e con questa possiamo dialogare più facilmente con la memoria
+        (precisamente locazione in memoria) e quindi dichiarare e/o assegnare ad essa un dato valore:</p>
+      <p id="5134f4d3-d603-46d2-9481-63109df21fd4" class="">
+      </p>
+      <pre id="86d7b7d5-c65b-4e11-bfc4-4cbc7df99c72" class="code"><code>var globalIsValid = true;  // Chiunque conosce <em>globalIsValid</em>
+const PI = 3.14            // questa variabile non cambierà mai
+let myAge = 27;            // questa invece cambia ogni anni
+													 // Questi sono tutti e 3 degli statement</code></pre>
+      <p id="9f433de0-f235-40e6-81fb-acc9b6c9d90a" class="">
+      </p>
+      <p id="e93387ce-6a85-4600-9aa6-51fa3692ca25" class="">Fondamentalmente abbiamo tre modi di definire una variabile
+        tramite le apposite keywords:</p>
+      <ul id="0cc3ec6b-1b19-4657-871a-364b476d0437" class="toggle">
+        <li>
+          <details open="">
+            <summary><code>var</code></summary>
+            <p id="3674ebab-a26e-4301-a975-e8a727162130" class="">La versione classica, definisce una variabile globale:
+              possiede uno <em>scope</em> globale (l&#x27;argomento verrà approfondito nella sezione relativa allo<em>
+                scope</em>). L&#x27;utilizzo di questa keyword ormai è stato superato con l&#x27;introduzione di
+              <code>let</code> e <code>const</code> con ES6.</p>
+          </details>
+        </li>
+      </ul>
+      <ul id="d30d2567-86d4-4bdf-a227-9002992b722f" class="toggle">
+        <li>
+          <details open="">
+            <summary><code>const</code></summary>
+            <p id="6f1c9a7c-4c73-4051-9c7e-8ca1e748e0c7" class="">Definisce una costante, un particolare tipo di
+              variabile immutabile e non riassegnabile. Se provate a riassegnare il valore a una costante JS vi
+              solleverà un errore. Consiglio di utilizzare principalmente questo tipo di binding.</p>
+          </details>
+        </li>
+      </ul>
+      <ul id="680d2b72-21a9-4c01-942c-b4151363c4e2" class="toggle">
+        <li>
+          <details open="">
+            <summary><code>let</code></summary>
+            <p id="3c4b4592-8b69-4433-8886-844f82c68154" class="">Definisce propriamente una variabile, mutabile e con
+              scope limitato al <em>block </em>(con blocco si intende tutto ciò che viene avvolto da una coppia di
+              <em>curly brackets</em> (parentesi graffe) entro la quale è definita.</p>
+          </details>
+        </li>
+      </ul>
+      <p id="529c50c4-27e1-437e-a258-3e87cc71001d" class="">
+      </p>
+      <figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex"
+        id="8bd3e95e-06e7-4b97-8ad2-58a66cf5b8bf">
+        <div style="font-size:1.5em"><span class="icon">📦</span></div>
+        <div style="width:100%">Siamo soliti pensare alle variabili come contenitori d&#x27;informazioni, di valori. In
+          realtà le cose non sembrano essere proprio così: una variabile in JavaScript punta al suo valore in memoria
+          (l&#x27;argomento verrà approfondito nella sezione relativa all&#x27;<em>environment</em> (ambiente). </div>
+      </figure>
+      <p id="18cbdcd7-2a93-4ca8-8bfb-a75675f668e5" class="">
+      </p>
+      <p id="3ca4fb52-d791-4987-8625-f6db7d658bae" class="">Questo modello di pensare le variabili ci viene in aiuto in
+        quanto due diverse variabili possono <strong>riferirsi </strong>allo stesso valore (quindi non contenere lo
+        stesso valore). </p>
+      <p id="303e3608-c005-4e66-894d-aa0b1f13d852" class="">
+      </p>
+      <p id="130aea34-e79e-4882-a16c-6982f467f468" class="">A parte nel caso di <code>const</code> possiamo riassegnare
+        il valore a cui puntiamo con una riassegnazione, usando sempre lo stesso <em>operatore di assegnazione </em>( =
+        ).</p>
+      <p id="c1eb14b3-52c4-474d-bf08-1d1a380f39ca" class="">Possiamo anche definire più variabili nella stessa
+        espressione: <code>let width = 1920, height = 1080;</code></p>
+      <p id="edd83c74-e8c1-4057-99c7-f42b78f515cb" class="">
+      </p>
+      <figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex"
+        id="5ce0bebd-f528-4690-9aa3-8bccd99ff6ea">
+        <div style="font-size:1.5em"><span class="icon">🐪</span></div>
+        <div style="width:100%">Consiglio di riflettere qualche secondo sulla scelta del nome di una variabile; inoltre
+          è ormai consuetudine preferire una formattazione tipo <em>camelCase </em>(l&#x27;argomento verrà approfondito
+          nella sezione <em>clean code</em>). Non è possibile usare gli spazi e i nomi delle <em>keywords</em>, come
+          <code>let</code> <code>const</code> <code>if</code> <code>for</code> <code>while</code> <code>try</code>
+          <code>do</code> ...</div>
+      </figure>
+      <p id="bc906876-bb16-497d-b031-b8bbccadbf2e" class="">
+      </p>
+      <hr id="e8a2ede2-d8bc-4af7-bac4-0073e728957b" />
+      <h2 id="c6b9af03-36d7-4742-be1c-1cec74dd4be8" class="">Environment</h2>
+      <p id="9ad0b629-650f-46f4-877b-fac9d771279f" class="">Ogni volta che andiamo a creare una variabile questa,
+        correlata al valore cui punta, viene automaticamente inserita in uno stack da qualche parte nella memoria del
+        computer (l&#x27;argomento merita un approfondimento a parte). Il luogo dove risiedono tutte questa variabili è
+        chiamato <em>Environment</em> (ambiente). </p>
+      <p id="02a3972e-772e-4782-85c9-614d0c32d585" class="">A questi vengono aggiunti tutta una serie di elementi
+        forniti dall&#x27;ambiente standard di JavaScript, queste sono le <em>functions </em>(funzioni). Abbiamo già
+        fatto ricorso a esse poco sopra, quando per esempio abbiamo chiamalo la funzione (più opportuno chiamarlo
+        metodo, dopo vedremo perché) <code>console.log()</code>. L&#x27;argomento richiede un capito tutto proprio, per
+        il momento voglio introdurlo qui per concludere con il binding.</p>
+      <p id="74b9ce51-2051-4ea4-8bdc-7313540637bf" class="">
+      </p>
+      <h3 id="72803577-0c59-4e32-955b-1a4167551e72" class="">Side-effects</h3>
+      <p id="d82f34c0-4cd7-4e95-a562-cf8b91401aed" class="">Una funzione è un programma in miniatura. Ne esistono di
+        ogni tipo, e di ogni tipo le possiamo scrivere. Per ora ci basta sapere che una funzione avvolge ed esegue una
+        determinata sequenza di codice (quindi di statements) servendosi di un blocco codice (una coppia di parentesi
+        graffe).</p>
+      <p id="6a6426e1-3d60-4f92-9cc4-d6974cc4765d" class="">
+      </p>
+      <pre id="03a79ed2-86ed-4e0e-9e3d-cc391a41ba91" class="code"><code>function checkIfPresent (keyboard) {
 	if (keyboard) {
 		console.log(&quot;We can write the code if we want&quot;);
 	} else {
 		console.log(&quot;We need something to continue&quot;);
 	}
-} </code></pre><p id="22999f2d-2038-49b9-ad4c-98f046f96dda" class="">
-</p><p id="5e5c4632-3048-40be-bc74-b5daab8c85bb" class="">La funzione sopra accetta un valore come parametro, tale valore viene passato come condizione di uno <em>if statement </em>(tra poco ne vedremo il funzionamento). Non c&#x27;è nulla di tanto diverso dal comune <code><em>console.log()</em></code><em> </em>se non che quest&#x27;ultimo è un metodo di un oggetto (presto tutto suonerà più familiare, promesso). Se vogliamo richiamare la nostra funzione possiamo procedere così</p><p id="d3570e99-3041-4eae-b89f-4b89cd80b01a" class="">
-</p><pre id="991d76e4-4d6e-4c97-922b-1e4593948fa1" class="code"><code>checkIfPresent(true);    // stamperà a video il valore &quot;We can... &quot;
-checkIfPresent(false);   // stamperà a video il valore &quot;We need... &quot;</code></pre><p id="3328edad-d30b-4125-a10a-f6b836ab473d" class="">
-</p><p id="ddb640a1-12b3-4650-8722-5a8929060e80" class="">Fondamentalmente quello che succede qui è passare l&#x27;argomento true o false all&#x27;interno della nostra funzione, il quale verrà processato all&#x27;interno della funzione e in base a esso ci viene fornito un risultato finale. In base agli argomenti passati la funzione si comporterà nel modo opportuno.</p><p id="acd3e017-6304-4616-96d9-6771117058de" class="">Questo è soltanto il primo modo di usare una funzione e, nel caso di <code>checkIfPresent()</code>, non ritorna alcun valore ma soltanto dei <em>side-effects </em>(effetti collaterali).</p><p id="54072044-10ed-4d25-9250-47b57b492d2f" class="">
-</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="21f49258-7b68-4459-a1af-4f01015bb5b0"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">Il valore passato tra parantesi è definito come <em>parameter </em>all&#x27;atto della definizione della funzione, mentre quando andiamo a richiamarla si dice <em>argument</em>.</div></figure><p id="1674d811-b8c3-46e6-8076-f1c07de2b45a" class="">
-</p><p id="851a9b18-fdda-4c58-ab6b-df2c05e7fed0" class="">Le funzioni però non si comportano soltanto come dei programmi in miniatura. Anzi, il loro punto di maggiore forza è dato dalla loro capacità di generare valore, di ritornare un valore, piuttosto che  side-effects.</p><p id="4edac526-fa65-41ee-8ecf-8ae6c9d81344" class="">
-</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="0265ca64-b284-4221-923e-6059d6c1fcba"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">Anche se con le proprie particolarità, una funzione può comportarsi esattamente come una variabile, ovvero può puntare a un valore. Ma qui il punto di forza: non lo fa staticamente come una classica variabile, bensì dopo aver svolto una serie di operazioni.</div></figure><p id="190c083f-b1b2-4918-8569-c1602ee5adca" class="">
-</p><p id="5b6498c8-302d-4cff-bfc9-5730720af575" class="">Per comprendere meglio questo aspetto delle funzioni, bisogna fare un velocissimo accesso alla programmazione funzionale. Una funzione che rispetti questo particolare paradigma deve rispondere a questi tre requisiti:</p><p id="634bb5cf-5bdc-42ed-a3bb-e51ae6567638" class="">
-</p><ul id="1347839b-5a47-451b-8098-5b2a811d9112" class="bulleted-list"><li>devono comportarsi come le funzioni matematiche, per un dato input restituiscono sempre lo stesso risultato (attenzione non valore, ma risultato, per tanto cambiando il parametro si avranno valori diversi);</li></ul><ul id="53903d0c-2301-417b-a8f8-fc4d5b590d4c" class="bulleted-list"><li>all&#x27;interno della funzione non dobbiamo interferire in alcun modo con il mondo esterno alla funzione, per esempio non possiamo modificare il valore di alcuna variabile, ne presentare alcun effetto collaterale;</li></ul><ul id="6b7c7cec-9550-4162-b930-4fc562ee3b8e" class="bulleted-list"><li>la funzioni posso essere passate e restituite da altre funzioni;</li></ul><p id="fc10645a-4695-42d5-902d-5e56f42154bf" class="">
-</p><p id="b56eba63-1aad-4116-b440-cff6dbf74794" class="">Questo è uno degli argomenti più impegnativi e a primo approccio tutto ciò suonerà come incomprensibile. Via via però questi concett diverranno sempre più chiari. </p><p id="8f04e7ef-685c-4b87-ba7e-10ec0a85cabe" class="">Per riassumere e tirare velocemente le somme: se una funzione risponde a queste condizioni, essa può essere definita come <em>pure function </em>(funzione pura).</p><p id="2ee141af-d415-4467-983f-4c80de8de17d" class="">
-</p><pre id="12d425f3-501b-4dd0-8f4d-f2e4e43aa22c" class="code"><code>function divisionBetween(firstNum, secondNum) {
+} </code></pre>
+      <p id="22999f2d-2038-49b9-ad4c-98f046f96dda" class="">
+      </p>
+      <p id="5e5c4632-3048-40be-bc74-b5daab8c85bb" class="">La funzione sopra accetta un valore come parametro, tale
+        valore viene passato come condizione di uno <em>if statement </em>(tra poco ne vedremo il funzionamento). Non
+        c&#x27;è nulla di tanto diverso dal comune <code><em>console.log()</em></code><em> </em>se non che
+        quest&#x27;ultimo è un metodo di un oggetto (presto tutto suonerà più familiare, promesso). Se vogliamo
+        richiamare la nostra funzione possiamo procedere così</p>
+      <p id="d3570e99-3041-4eae-b89f-4b89cd80b01a" class="">
+      </p>
+      <pre id="991d76e4-4d6e-4c97-922b-1e4593948fa1" class="code"><code>checkIfPresent(true);    // stamperà a video il valore &quot;We can... &quot;
+checkIfPresent(false);   // stamperà a video il valore &quot;We need... &quot;</code></pre>
+      <p id="3328edad-d30b-4125-a10a-f6b836ab473d" class="">
+      </p>
+      <p id="ddb640a1-12b3-4650-8722-5a8929060e80" class="">Fondamentalmente quello che succede qui è passare
+        l&#x27;argomento true o false all&#x27;interno della nostra funzione, il quale verrà processato all&#x27;interno
+        della funzione e in base a esso ci viene fornito un risultato finale. In base agli argomenti passati la funzione
+        si comporterà nel modo opportuno.</p>
+      <p id="acd3e017-6304-4616-96d9-6771117058de" class="">Questo è soltanto il primo modo di usare una funzione e, nel
+        caso di <code>checkIfPresent()</code>, non ritorna alcun valore ma soltanto dei <em>side-effects </em>(effetti
+        collaterali).</p>
+      <p id="54072044-10ed-4d25-9250-47b57b492d2f" class="">
+      </p>
+      <figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex"
+        id="21f49258-7b68-4459-a1af-4f01015bb5b0">
+        <div style="font-size:1.5em"><span class="icon">💡</span></div>
+        <div style="width:100%">Il valore passato tra parantesi è definito come <em>parameter </em>all&#x27;atto della
+          definizione della funzione, mentre quando andiamo a richiamarla si dice <em>argument</em>.</div>
+      </figure>
+      <p id="1674d811-b8c3-46e6-8076-f1c07de2b45a" class="">
+      </p>
+      <h3 id="c7baf73a-73b4-4322-8d68-49fc96c84b28" class="">Return a value</h3>
+      <p id="851a9b18-fdda-4c58-ab6b-df2c05e7fed0" class="">Le funzioni però non si comportano soltanto come dei
+        programmi in miniatura. Anzi, il loro punto di maggiore forza è dato dalla loro capacità di generare valore, di
+        ritornare un valore, piuttosto che side-effects.</p>
+      <p id="4edac526-fa65-41ee-8ecf-8ae6c9d81344" class="">
+      </p>
+      <figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex"
+        id="0265ca64-b284-4221-923e-6059d6c1fcba">
+        <div style="font-size:1.5em"><span class="icon">💡</span></div>
+        <div style="width:100%">Anche se con le proprie particolarità, una funzione può comportarsi esattamente come una
+          variabile, ovvero può puntare a un valore. Ma qui il punto di forza: non lo fa staticamente come una classica
+          variabile, bensì dopo aver svolto una serie di operazioni.</div>
+      </figure>
+      <p id="190c083f-b1b2-4918-8569-c1602ee5adca" class="">
+      </p>
+      <p id="5b6498c8-302d-4cff-bfc9-5730720af575" class="">Per comprendere meglio questo aspetto delle funzioni,
+        bisogna fare un velocissimo accesso alla programmazione funzionale. Una funzione che rispetti questo particolare
+        paradigma deve rispondere a questi tre requisiti:</p>
+      <p id="634bb5cf-5bdc-42ed-a3bb-e51ae6567638" class="">
+      </p>
+      <ul id="1347839b-5a47-451b-8098-5b2a811d9112" class="bulleted-list">
+        <li>devono comportarsi come le funzioni matematiche, per un dato input restituiscono sempre lo stesso risultato
+          (attenzione non valore, ma risultato, per tanto cambiando il parametro si avranno valori diversi);</li>
+      </ul>
+      <ul id="53903d0c-2301-417b-a8f8-fc4d5b590d4c" class="bulleted-list">
+        <li>all&#x27;interno della funzione non dobbiamo interferire in alcun modo con il mondo esterno alla funzione,
+          per esempio non possiamo modificare il valore di alcuna variabile, ne presentare alcun effetto collaterale;
+        </li>
+      </ul>
+      <ul id="6b7c7cec-9550-4162-b930-4fc562ee3b8e" class="bulleted-list">
+        <li>la funzioni posso essere passate e restituite da altre funzioni;</li>
+      </ul>
+      <p id="fc10645a-4695-42d5-902d-5e56f42154bf" class="">
+      </p>
+      <p id="b56eba63-1aad-4116-b440-cff6dbf74794" class="">Questo è uno degli argomenti più impegnativi e a primo
+        approccio tutto ciò suonerà come incomprensibile. Via via però questi concett diverranno sempre più chiari. </p>
+      <p id="8f04e7ef-685c-4b87-ba7e-10ec0a85cabe" class="">Per riassumere e tirare velocemente le somme: se una
+        funzione risponde a queste condizioni, essa può essere definita come <em>pure function </em>(funzione pura).</p>
+      <p id="2ee141af-d415-4467-983f-4c80de8de17d" class="">
+      </p>
+      <pre id="12d425f3-501b-4dd0-8f4d-f2e4e43aa22c" class="code"><code>function divisionBetween(firstNum, secondNum) {
 	return firstNum / secondNum;
-}</code></pre><p id="adea5130-fa8a-4f44-b891-ec3c68301fcf" class="">
-</p><p id="6a8b012b-6f09-4666-ac2d-e515ff9208a4" class="">La funzione non modifica alcuna variabile esterna (seconda condizione) e restituisce un&#x27;operazione matematica tra gli argomenti passati (prima condizione).</p><pre id="76029b7b-0b79-4417-acf8-d9ebf599c818" class="code"><code>divisionBetween(10, 5);  // Ritornerà 2, mentre
-divisionBetween(28, 2);  // 14</code></pre><p id="eba73f34-baa9-490e-bfa8-1c19359d504d" class="">
-</p><p id="9e97e49a-3e3c-4b0b-a648-91fa4e35bfc4" class="">Nel seguente caso, a differenza della funzione <code>checkIfPresent()</code>, la funzione si dice <em>return a value</em> (ritorna un valore) e, riagganciandoci a quanto detto prima, se una funzione ritorna un valore il suo comportamento sarà simili a quello di una variabile: si comporta come una qualunque espressione. Questo particolare comportamento, tipico di JavaScript, definisce le funzioni come <em>first-class objects.</em> </p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="9152d4ad-28f2-471f-a80d-208ad77e5593"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">Sebbene questo sia un argomento più avanzato, ci basta sapere che, ancora una volta, se la nostra funzione restituisce una valore allora possiamo passare le nostre funzioni come argomento di un&#x27;altra funzione.</div></figure><p id="96f817de-eac3-4e67-93f0-039916b08ef1" class="">
-</p><p id="772e80c5-4b9b-468f-9b54-8c51aefaa29a" class="">Considerate il seguente statement <code>console.log(Math.round(3.14));</code></p><p id="8934d512-65d9-4a88-86d4-8d79dd506e16" class="">La funzione (più precisamente metodo, vedremo più avanti perchè) <code>round()</code> dell&#x27;oggetto <code>Math</code> è una funzione che <em>ritorna </em>il numero passato come argomento approssimato all&#x27;intero più vicino, dunque 3. Se proviamo a lanciare infatti <code>Math.round(3.14)</code> vedremo proprio questo. Questo valore è a sua volta passato come argomento di <code>console.log()</code> Non poi troppo diverso dallo scrivere direttamente <code>console.log(3)</code>. Ecco che abbiamo passato una funzione (e il suo valore di ritorno) come argomento di un&#x27;altra funzione (terza condizione).</p><p id="3fb3d4a2-1c82-46a1-80af-cf083d32174e" class="">
-</p><pre id="c7bd7ddc-0faf-455f-b8e9-56c811c0da6a" class="code"><code>const firstOperation = divisionBetween(30, 2);
+}</code></pre>
+      <p id="adea5130-fa8a-4f44-b891-ec3c68301fcf" class="">
+      </p>
+      <p id="6a8b012b-6f09-4666-ac2d-e515ff9208a4" class="">La funzione non modifica alcuna variabile esterna (seconda
+        condizione) e restituisce un&#x27;operazione matematica tra gli argomenti passati (prima condizione).</p>
+      <pre id="76029b7b-0b79-4417-acf8-d9ebf599c818" class="code"><code>divisionBetween(10, 5);  // Ritornerà 2, mentre
+divisionBetween(28, 2);  // 14</code></pre>
+      <p id="eba73f34-baa9-490e-bfa8-1c19359d504d" class="">
+      </p>
+      <p id="9e97e49a-3e3c-4b0b-a648-91fa4e35bfc4" class="">Nel seguente caso, a differenza della funzione
+        <code>checkIfPresent()</code>, la funzione si dice <em>return a value</em> (ritorna un valore) e,
+        riagganciandoci a quanto detto prima, se una funzione ritorna un valore il suo comportamento sarà simili a
+        quello di una variabile: si comporta come una qualunque espressione. Questo particolare comportamento, tipico di
+        JavaScript, definisce le funzioni come <em>first-class objects.</em> </p>
+      <figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex"
+        id="9152d4ad-28f2-471f-a80d-208ad77e5593">
+        <div style="font-size:1.5em"><span class="icon">💡</span></div>
+        <div style="width:100%">Sebbene questo sia un argomento più avanzato, ci basta sapere che, ancora una volta, se
+          la nostra funzione restituisce una valore allora possiamo passare le nostre funzioni come argomento di
+          un&#x27;altra funzione.</div>
+      </figure>
+      <p id="96f817de-eac3-4e67-93f0-039916b08ef1" class="">
+      </p>
+      <p id="772e80c5-4b9b-468f-9b54-8c51aefaa29a" class="">Considerate il seguente statement
+        <code>console.log(Math.round(3.14));</code></p>
+      <p id="8934d512-65d9-4a88-86d4-8d79dd506e16" class="">La funzione (più precisamente metodo, vedremo più avanti
+        perchè) <code>round()</code> dell&#x27;oggetto <code>Math</code> è una funzione che <em>ritorna </em>il numero
+        passato come argomento approssimato all&#x27;intero più vicino, dunque 3. Se proviamo a lanciare infatti
+        <code>Math.round(3.14)</code> vedremo proprio questo. Questo valore è a sua volta passato come argomento di
+        <code>console.log()</code> Non poi troppo diverso dallo scrivere direttamente <code>console.log(3)</code>. Ecco
+        che abbiamo passato una funzione (e il suo valore di ritorno) come argomento di un&#x27;altra funzione (terza
+        condizione).</p>
+      <p id="3fb3d4a2-1c82-46a1-80af-cf083d32174e" class="">
+      </p>
+      <pre id="c7bd7ddc-0faf-455f-b8e9-56c811c0da6a" class="code"><code>const firstOperation = divisionBetween(30, 2);
 const secondOperation = divisionBetween(20, 4);
 divisionBetween(firstOperation, secondOperation);   
             
 // Oppure protremmo scriverla direttamente cosi: 
-divisionBetween(divisionBetween(30, 2), divisionBetween(20, 4));     </code></pre><p id="a3bea541-1041-4418-b454-8160bf0047cb" class="">
-</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="06d15586-93da-4690-ae8d-1ee4ac183d4c"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">Quest&#x27;ultima chiamata è effettivamente un po forzata, ma abituarsi a ragionare su esempi come questi può aiutare nell&#x27;apprendimento.</div></figure><p id="34aae04d-ad7d-4efe-8a74-342dace602e9" class="">
-</p></div></article></body></html>
+divisionBetween(divisionBetween(30, 2), divisionBetween(20, 4));     </code></pre>
+      <p id="a3bea541-1041-4418-b454-8160bf0047cb" class="">
+      </p>
+      <figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex"
+        id="06d15586-93da-4690-ae8d-1ee4ac183d4c">
+        <div style="font-size:1.5em"><span class="icon">💡</span></div>
+        <div style="width:100%">Quest&#x27;ultima chiamata è effettivamente un po forzata, ma abituarsi a ragionare su
+          esempi come questi può aiutare nell&#x27;apprendimento.</div>
+      </figure>
+      <p id="34aae04d-ad7d-4efe-8a74-342dace602e9" class="">
+      </p>
+      <h2 id="a73e6760-1eda-42b0-9a83-241fa499ef2c" class="">Conditional execution</h2>
+      <p id="be4a4737-c1ae-4e56-8a3c-0a7b499658fb" class="">Come in ogni altro linguaggio di programmazione, anche il
+        Javascript possiamo creare delle condizioni. Se la condizione passata come espressione si realizza allorra
+        ritorna un determinato statement, altrimenti un altro.</p>
+      <p id="f509c4bf-3e2e-4564-9522-ea299333e815" class="">Lo statement <code>if</code> accetta una <em>expression
+        </em>(espressione) come condizione e, se questa risulta essere <em>true </em>(vera) allora ne restituisce lo
+        statement all&#x27;interno del <em>block</em> (blocco) che costituisce. Quindi la nostra condizione lavorerà su
+        un valore booleano, dato dal risultato dell&#x27;espressione. La sintassi è abbastanza intuitiva: <code>if
+          (expression) { statement };</code></p>
+      <p id="9fd05022-edaa-4cbe-8350-5387c0d07c78" class="">
+      </p>
+      <pre id="940107ed-2c1f-4aed-ba0e-a44a73597d9d" class="code"><code>function takeTheUmbrella() {
+	// tutte le operazioni che ci portano a prendere
+  // l&#x27;ombrello dall&#x27;ingresso di casa
+}
+
+let itsRaining = true;
+
+if (itsRaining) {        // La variabile booleana &#x27;itsRaining&#x27; è true, dunque
+	takeTheUmbrella();     // la funzione &#x27;takeTheUmbrella()&#x27; verrà eseguita.
+}</code></pre>
+      <p id="f323009e-6997-4782-8415-a7513da289fa" class="">
+      </p>
+      <figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex"
+        id="0205f636-23cf-4813-a721-bc42070082ce">
+        <div style="font-size:1.5em"><span class="icon">💡</span></div>
+        <div style="width:100%">Se lo statement si riassume in un&#x27;unica riga, come nel caso di
+          <code>itsRaining</code> possiamo omettere le parentesi graffe: <code>if (itsRaining) takeTheUmbrella();</code>
+        </div>
+      </figure>
+      <p id="dd8f9fe6-2e2a-4a87-8fff-449f9c4d35b7" class="">
+      </p>
+      <p id="9f7a90db-c4e5-4a9f-b989-b3eaba6ca73c" class="">Possiamo specificare ancor più le nostre condizioni usando
+        <code>else</code> e <code>else if</code> come nell&#x27;esempio seguente:</p>
+      <p id="8f7ee956-63e6-46e9-a08e-6af53edb75a7" class="">
+      </p>
+      <pre id="09ff6049-d1b0-47ef-b2ed-d936c5ea3783" class="code"><code>let itsRaining = true;
+
+if (itsRaining) {        // La variabile booleana &#x27;itsRaining&#x27; è true, dunque
+	takeTheUmbrella();     // verrà eseguita.
+} else if (itsCloudy) {
+	dontStayOutTooLong();
+} else {
+	takeTheSunglasses();
+}</code></pre>
+      <p id="571e61b8-14e8-462d-b7de-531fb9c2d361" class="">
+      </p>
+      <h2 id="db4aa0af-bb05-4483-a642-1f21d5bdb190" class="">Loops</h2>
+      <p id="76d3fee1-31c7-41d3-83c9-f2127cb68b4e" class="">Il concetto di <em>loop</em> (ciclo) si rifà semplicemente
+        al concetto di ripetizione, eseguire dunque più volte lo stesso statement. Ma fondamentalmente la peculiarità di
+        un loop è la sua capacità di permettere il ritorno ad una posizione precisa del programma, dove una determinata
+        codizione viene vericata.</p>
+      <p id="b3db766f-bfde-4f6b-bf2f-b412f5101956" class="">Mi spiego meglio. Intato è necessario chiamare
+        all&#x27;appello il <em>pattern</em> (modello) classico che il loop prevede: </p>
+      <ol id="00d3149d-4de4-4b20-9687-959f56b70d72" class="numbered-list" start="1">
+        <li>si definisce una variabile che funge da <em>counter </em>(contatore) e che tiene traccia del progresso del
+          loop</li>
+      </ol>
+      <ol id="a93a0632-275c-4a7c-b9a4-dcda356a9866" class="numbered-list" start="2">
+        <li>si crea il loop, come ad esempio <code>while</code> e ad esso si da la condizione da verificare</li>
+      </ol>
+      <ol id="ee09bf6d-bf65-4e6f-ba99-be23a4e20ae5" class="numbered-list" start="3">
+        <li>all&#x27;iterno del blocco while si definiscono gli statement da eseuire, dove l&#x27;ultimo deve essere
+          l&#x27;update del nostro <em>counter</em> (il che può essere un incremento ad esempio)</li>
+      </ol>
+      <h3 id="0f427745-9836-4485-9539-9ac74f6e8365" class="">While</h3>
+      <p id="653fd448-f5d2-4482-9c8f-9c3aee2d8f30" class="">Vediamo subito una implementazione di quanto detto.</p>
+      <p id="3245fa63-21a0-46fb-8025-4a3b8fb84c0f" class="">
+      </p>
+      <pre id="8be46cb0-7862-4004-986b-c24d9d7ee440" class="code"><code>let jsExperience = 0;
+
+while (jsExperience &lt; 100) {
+	console.log(&#x27;Livello: &#x27;, jsExperience, &#x27;Devi studiare ancora un po di Javascript&#x27;);
+  studyAndCoding();          // la funzione è puramente figurativa, non esiste
+	jsExperience ++;  
+}
+
+console.log(&#x27;Complimenti, adesso puoi passare a React!&#x27;);</code></pre>
+      <p id="fb95b9ad-e425-4167-a975-6180e768087e" class="">
+      </p>
+      <p id="99f13e4a-55a5-47c3-8a72-6643fd08004f" class="">Il ciclo sopra definito ci informa sul nostro livello di
+        esperienza in javascript, se questo è inferiore a 100 allora continuerà ad eseguire lo statement che prevede un
+        <code>console.log()</code> con l&#x27;esperienza attuale, una funzione che sembrerebbe esercitare lo studio e
+        l&#x27;update del counter.</p>
+      <p id="554fd8c0-ee8c-4954-a06a-52bccf295bfa" class="">Quando alla fine la nostra variabile
+        <code>jsExperience</code> verrà incrementata abbastanza da soddisfare la condizione, allora il ciclo si
+        distrugge e si passerà direttamente allo statement successivo, ovvero i complimenti e l&#x27;invito a passare a
+        React!</p>
+      <p id="a2c984d7-07d8-4aa9-958c-02a6a0ca704a" class="">
+      </p>
+      <figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex"
+        id="54314504-ac5a-48e6-8cae-fde8680f2337">
+        <div style="font-size:1.5em"><span class="icon">💡</span></div>
+        <div style="width:100%">Incrementare il counter con il doppio operatore più <code>jsExperience++</code> è
+          analogo a scrivere <code>jsExperience = jsExperience + 1</code> o in un&#x27;altra forma abbreviata
+          <code>jsExperience += 1</code>. Questo approccio è definito come <em>Updating Bindings Succinctly.</em></div>
+      </figure>
+      <figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex"
+        id="d0d7732f-c9ce-4e7b-96dd-661d6a0a73d7">
+        <div style="font-size:1.5em"><span class="icon">⚠️</span></div>
+        <div style="width:100%">Provate a togliere il counter dal blocco di un ciclo e vedrete cosa succede! Il ciclo
+          senza la sua condizione di update procederà all&#x27;infinito.</div>
+      </figure>
+      <p id="2d8b1b57-a851-472c-afbe-8ece17c0a2d0" class="">
+      </p>
+      <h3 id="f7ca2ef0-f209-4b97-9daa-4033cf5a7b7f" class="">For</h3>
+      <p id="58b507d1-d775-4996-9fcb-7a60316ac581" class="">Il ciclo <code>for</code> proprio come <code>while</code>
+        segue lo stesso pattern, il che prevede un <em>counter</em>, una <em>condition</em> e un <em>update</em>, ognuno
+        dei quali separato da un <em>semicolon</em>.</p>
+      <p id="33977de9-b4a9-40f0-bce5-2519b3b1594a" class="">La sintassi: <code>for (counter; condition; update);</code>
+      </p>
+      <p id="d4d76b3d-aa27-41c7-996a-9c5fff9a4a05" class="">
+      </p>
+      <pre id="8df09115-f05c-4ba6-907d-775d88528803" class="code"><code>for (let personsQueuing = 16; personsQueuing &gt; 0; personsQueuing --) {
+	giveThemATicket();        // la funzione è puramente figurativa, non esiste
+}</code></pre>
+      <p id="e8af3558-4447-46e1-afb0-3687710e64a1" class="">
+      </p>
+      <p id="802f559f-6f56-43e3-b091-16af7bee6581" class="">A differenza del <code>while</code> il nuovo ciclo sembra
+        essere più immediato nella scrittura, risultando anche più veloce da leggere. La definizione di un counter, il
+        checking della condizione e l&#x27;update avvengono al momento della dichiarazione del ciclo stesso. Come
+        leggere il codice sopra? &quot;<em>Se ci sono persone in coda dai loro un ticket e rimuovile dalla lista di
+          attesa</em>&quot;, oppure, <em>&quot;finchè il numero di persone è maggiore di 0 dai loro un ticket
+        </em><em><code>giveThemATicket()</code></em><em> e passa alla persona successiva&quot;</em>.</p>
+      <p id="9d76f3a8-153c-4e35-9489-7eed98d8979a" class="">
+      </p>
+      <figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex"
+        id="cf35ebfe-860d-414b-884e-bd871807e819">
+        <div style="font-size:1.5em"><span class="icon">💡</span></div>
+        <div style="width:100%">Consiglio di allena la propria capacità di <em>abstraction </em>(astrazione), ovvero
+          pensare, e poi scrivere, le soluzioni astraendole da problemi reali. L&#x27;utilizzo di una corretta
+          nominazione delle variabili o delle funzioni gioca un ruolo fondamentale. Dedicherò un capitolo proprio
+          all&#x27;astrazione.</div>
+      </figure>
+      <p id="08056bde-6159-4d13-ac50-c0c96b4fd4a9" class="">
+      </p>
+      <h3 id="7dfd3b04-2a76-4eac-b6b8-0f807f1fe8f0" class="">Break</h3>
+      <p id="222fc009-43bc-4f84-995e-87749ec1e833" class="">Giungere alla fine della condizione, quindi il verificarsi
+        del <em>false,</em> non è l&#x27;unica possibilità per interrompere un ciclo. A volte capita che vogliamo
+        bloccarne l&#x27;esecuzione se qualcosa di particolare succede, come il passaggio di una determiata variabile.
+        In questi casi ci viene in aiuto la <em>keyword</em> <code>break</code> che semplicemente distrugge il ciclo
+        entro la quale viene chiamata.</p>
+      <p id="874eb4b5-848c-48fd-a74d-81bad3d99301" class="">
+      </p>
+      <pre id="3a7c9cb5-1c70-45d4-a516-2d3d7ee8bba2" class="code"><code>itsTooLate = 0;
+for (let personsQueuing = 16; personsQueuing &gt; 0; personsQueuing --) {
+	giveThemATicket();     // la funzione è puramente figurativa, non esiste     
+	itsTooLate++;
+	if (itsTooLate &gt;= 13) {
+		break;
+	}
+}</code></pre>
+      <p id="d35904f8-846a-4b48-a938-63b97304ed0f" class="">
+      </p>
+      <p id="66ee9b1e-f953-4c01-b6a0-82258c4571b2" class="">Talvolta può capitare che in qualche ufficio pubblico la
+        coda superi l&#x27;orario di ricevimento. In questi casi purtroppo i ticket non vengono più distribuiti. Questo
+        è il caso del <code>for</code> di sopra che prevede un incremento della variabile <code>itsTooLate</code> la
+        quale, al raggiungimento di un generico 13 (che possono essere il numero degli individui o l&#x27;orario),
+        interrompe bruscamente il ciclo for. </p>
+      <p id="1f17b9fc-9cb4-4b22-be69-6d6826198e5c" class="">
+      </p>
+      <h3 id="0224da0c-6b99-4416-9d56-c97fff4bddd9" class="">Continue</h3>
+      <p id="3aba43bf-a6ad-4820-8dc1-43075a2b9399" class="">Vi è un&#x27;ulteriore supporto alla gestione dei cicli. Se
+        vogliamo ad esempio interrompere non l&#x27;intero ciclo, ma la condizione attuale, saltare quindi
+        all&#x27;iterazione successiva, allora possiamo utilizzare la keyword <code>continue</code>.</p>
+      <pre id="4c83f52b-0e10-4596-b4cb-0e1ca7ba52c5" class="code"><code>for (let num = 100; num &gt;= 3; num --) {
+	if (num % 3 === 0) {
+		if (num % 5 === 0) continue;
+		console.log(num, &#x27;è divisibile per 3&#x27;);
+	}
+}</code></pre>
+      <p id="beab9936-ef7f-437f-889d-0040e72674ed" class="">
+      </p>
+      <p id="d5b8a772-5a90-46a3-b8aa-31363613c824" class="">Invito allo sforzo che questo esempio richiede, verrà
+        ripagato! In pratica possiamo leggere così: <em>&quot;per ogni numero da 100 a 3, iterando ogni numero uno per
+          uno, se il numero è divisibile per 3 ritorna il numero ma se lo stesso numero è divisibile per 5 allora si
+          salta all&#x27;iterazione successiva&quot;</em>.</p>
+      <p id="0d236379-53cc-42a0-89d6-ce7c15f5ad15" class="">
+      </p>
+      <figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex"
+        id="e404da3a-be8d-4137-92d4-9694d943f81b">
+        <div style="font-size:1.5em"><span class="icon">💡</span></div>
+        <div style="width:100%">L&#x27;operatore modulo ( % ) è qui utilizzato per ottenere i numeri divisibili per 3 e
+          5. Questa è l&#x27;espressione <code>(num % n === 0)</code></div>
+      </figure>
+      <p id="f72a8958-90fd-4bb9-925d-6f2d3b0ca3bb" class="">
+      </p>
+      <h2 id="b66fb393-759b-4646-b3a2-187a3ba88edb" class="">Switch</h2>
+      <p id="537c0be8-20d1-4778-9981-c3d44aa7369a" class="">Considerato l&#x27;esempio seguente:</p>
+      <p id="ea4d75a0-b8ce-4bff-a579-af02fbaadb15" class="">
+      </p>
+      <pre id="55347cde-a305-468e-965d-05747dd0c0ee" class="code"><code>let dayOfTheWeek = &#x27;Monday&#x27;;
+
+if (dayOfTheWeek === &#x27;Monday&#x27;) {
+	console.log(dayOfTheWeek, &#x27;is associated with the Moon&#x27;);
+} else if (dayOfTheWeek === &#x27;Tuesday&#x27;) {
+	console.log(dayOfTheWeek, &#x27;is associated with Mars&#x27;);
+} else if (dayOfTheWeek === &#x27;Wednesday&#x27;) {
+	console.log(dayOfTheWeek, &#x27;is associated with Mercury&#x27;);
+} else if (dayOfTheWeek === &#x27;Thursday&#x27;) {
+	console.log(dayOfTheWeek, &#x27;is associated with Jupiter&#x27;);
+} else if (dayOfTheWeek === &#x27;Friday&#x27;) {
+	console.log(dayOfTheWeek, &#x27;is associated with Venus&#x27;);
+} else if (dayOfTheWeek === &#x27;Saturday&#x27;) {
+	console.log(dayOfTheWeek, &#x27;is associated with Saturn&#x27;);
+} else if (dayOfTheWeek === &#x27;Sunday&#x27;) {
+	console.log(dayOfTheWeek, &#x27;is associated with the Sun&#x27;);
+} else {
+	console.log(&#x27;What planet are you really from?&#x27;);
+}</code></pre>
+      <p id="e3a81a31-2a11-480f-a078-d8a3375dec6a" class="">
+      </p>
+      <p id="96315364-d593-4e37-832f-3725da67748e" class="">In base al valore della variabile <code>dayOfTheWeek</code>
+        restituisce il corrispondente pianeta cui è assegnato il giorno della settimana. Con <code>switch</code>
+        possiamo definire lo stesso procedendo come l&#x27;esempio sotto, il risultato è identico. Da tenere a mente che
+        a <code>switch</code> sono necessari 4 elementi: </p>
+      <ul id="e185942c-532a-47f0-a11f-96859445ff57" class="bulleted-list">
+        <li>una variabile da analizzare</li>
+      </ul>
+      <ul id="50665ee9-12bf-4180-a9fa-8d4880b4ecea" class="bulleted-list">
+        <li>(<em>n)</em> casi da analizzare</li>
+      </ul>
+      <ul id="e4d58858-46a3-4984-8252-6e1cb6653766" class="bulleted-list">
+        <li>un <code>break</code> alla fine di ognuno di essi </li>
+      </ul>
+      <ul id="ecdbdfb5-1982-4ef1-a2a0-56559359b7f9" class="bulleted-list">
+        <li>un caso <code>default</code> nel caso in cui nessuno degli altri si verifica.</li>
+      </ul>
+      <p id="75c3e49b-e6ef-4def-9faf-bfc679786a4f" class="">
+      </p>
+      <pre id="d2eb89f6-d625-4d40-a410-aa119819f97b" class="code"><code>let dayOfTheWeek = &#x27;Monday&#x27;;
+
+switch (dayOfTheWeek) {
+	case &#x27;Monday&#x27;:
+		console.log(dayOfTheWeek, &#x27;is associated with the Moon&#x27;);
+		break;
+	case &#x27;Tuesday&#x27;:
+		console.log(dayOfTheWeek, &#x27;is associated with Mars&#x27;);
+		break;
+	case &#x27;Wednesday&#x27;:
+		console.log(dayOfTheWeek, &#x27;is associated with Mercury&#x27;);
+		break;
+	case &#x27;Thursday&#x27;:
+		console.log(dayOfTheWeek, &#x27;is associated with Jupiter&#x27;);
+		break;
+	case &#x27;Friday&#x27;:
+		console.log(dayOfTheWeek, &#x27;is associated with Venus&#x27;);
+		break;
+	case &#x27;Saturday&#x27;:
+		console.log(dayOfTheWeek, &#x27;is associated with Saturn&#x27;);
+		break;
+	case &#x27;Sunday&#x27;:
+		console.log(dayOfTheWeek, &#x27;is associated with the Sun&#x27;);
+		break;
+	default :
+		console.log(&#x27;What planet are you really from?&#x27;);
+		break;
+}</code></pre>
+      <p id="45d3e65d-7956-4e80-816e-b3832d7f4015" class="">
+      </p>
+      <figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex"
+        id="bade7e20-31d1-4a64-bf88-41442197360f">
+        <div style="font-size:1.5em"><span class="icon">💡</span></div>
+        <div style="width:100%">L&#x27;utilizzo di <code>switch</code> o di <code>if</code> dipende da situazione a
+          situazione, talvolta la scelta è tratta anche dal gusto personale, certo è che non c&#x27;è alcun migliore o
+          peggiore tra i due.</div>
+      </figure>
+    </div>
+  </article>
+</body>
+
+</html>
